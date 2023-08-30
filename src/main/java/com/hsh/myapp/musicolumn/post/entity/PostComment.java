@@ -1,5 +1,6 @@
-package com.hsh.myapp.musicolumn.entity;
+package com.hsh.myapp.musicolumn.post.entity;
 
+import com.hsh.myapp.musicolumn.auth.entity.User;
 import jakarta.persistence.*;
 import lombok.Data;
 import lombok.NoArgsConstructor;

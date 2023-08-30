@@ -1,7 +1,7 @@
-package com.hsh.myapp.musicolumn;
+package com.hsh.myapp.musicolumn.post;
 
-import com.hsh.myapp.musicolumn.entity.Post;
-import com.hsh.myapp.musicolumn.repository.PostRepository;
+import com.hsh.myapp.musicolumn.post.entity.Post;
+import com.hsh.myapp.musicolumn.post.repository.PostRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;

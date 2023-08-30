@@ -1,6 +1,6 @@
-package com.hsh.myapp.musicolumn;
+package com.hsh.myapp.musicolumn.post;
 
-import com.hsh.myapp.musicolumn.repository.PostRepository;
+import com.hsh.myapp.musicolumn.post.repository.PostRepository;
 
 import org.springframework.beans.factory.annotation.Autowired;
 

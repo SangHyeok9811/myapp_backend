@@ -1,5 +1,6 @@
-package com.hsh.myapp.musicolumn.entity;
+package com.hsh.myapp.musicolumn.post.entity;
 
+import com.hsh.myapp.musicolumn.auth.entity.User;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -13,6 +14,7 @@ public class Post {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long postNo;
     private String title;
+
     private String creatorName;
     private String content;
     private String genre;
@@ -26,6 +28,7 @@ public class Post {
     @Column(columnDefinition = "LONGTEXT")
     private String video;
 
+//    private long joinNo
     @Column(name = "`like`")
     private long like;
 
