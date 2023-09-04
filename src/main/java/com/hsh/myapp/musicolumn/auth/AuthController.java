@@ -65,6 +65,19 @@ public class AuthController {
                             .fromHttpUrl("http://localhost:5500/login.html?err=Unauthorized")
                             .build().toUri())
                     .build();
+//            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+        }
+
+        boolean isVerified = hash.verifyHash(password, login.get().getSecretPassword());
+
+        if(!isVerified) {
+            return ResponseEntity
+                    .status(HttpStatus.FOUND)
+                    .location(ServletUriComponentsBuilder
+                            .fromHttpUrl("http://localhost:5500/login.html?err=Unauthorized")
+                            .build().toUri())
+                    .build();
+//            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
         }
 
         Login l = login.get();
@@ -77,13 +90,16 @@ public class AuthController {
                             .fromHttpUrl("http://localhost:5500?err=Conflict")
                             .build().toUri())
                     .build();
+//            return ResponseEntity.status(HttpStatus.CONFLICT).build();
         }
+
         String token = jwt.createToken(
-                l.getJoinNo(),l.getId(),
+                user.get().getUserNumber(),l.getId(),
                 user.get().getNickName(),
                 user.get().getBirthdate(),
                 user.get().getEmail(),
                 user.get().getUserImage());
+
         System.out.println("토큰: " + token);
 
         Cookie cookie = new Cookie("token",token);
@@ -95,7 +111,7 @@ public class AuthController {
 
         return ResponseEntity.status(HttpStatus.FOUND)
                 .location(ServletUriComponentsBuilder
-                        .fromHttpUrl("http://localhost:5500?err=Conflict")
+                        .fromHttpUrl("http://localhost:5500")
                         .build().toUri())
                 .build();
     }

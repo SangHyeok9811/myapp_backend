@@ -41,7 +41,7 @@ public class AuthService {
                         .userImage("")
                         .login(savedLogin)
                         .build();
-        long userNo = userRepo.save(toSaveUser).getUserNo();
+        long userNo = userRepo.save(toSaveUser).getUserNumber();
 
         savedLogin.setUserNo(userNo);
         loginRepo.save(savedLogin);

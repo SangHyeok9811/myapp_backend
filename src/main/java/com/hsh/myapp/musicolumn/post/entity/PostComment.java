@@ -17,9 +17,15 @@ public class PostComment {
 
     private String ownerNickName;
 
+    private long ownerNo;
+
+    private long postNo;
+
     @ManyToOne
+//    @JoinColumn(name = "postNo")
     private Post post;
 
     @ManyToOne // Many-to-One 관계 추가
+//    @JoinColumn(name = "userNumber")
     private User user; // 댓글을 작성한 유저
 }

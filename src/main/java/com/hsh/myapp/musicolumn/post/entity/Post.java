@@ -4,6 +4,8 @@ import com.hsh.myapp.musicolumn.auth.entity.User;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.util.List;
+
 @Data
 @Builder
 @AllArgsConstructor
@@ -36,7 +38,14 @@ public class Post {
 
     private long createdTime;
 
+    @OneToMany(mappedBy = "post")
+    private List<PostComment> postComments;
+
+    private long commentCnt;
+
+//    private String latestComment;
+
     @ManyToOne
-    @JoinColumn(name = "user_id")
+//    @JoinColumn(name = "userNumber")
     private User user;
 }

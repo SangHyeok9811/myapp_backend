@@ -12,7 +12,7 @@ import java.time.LocalDate;
 @AllArgsConstructor
 @NoArgsConstructor
 public class AuthUser {
-    private long joinNo;
+    private long userNumber;
     private String id;
     private String nickName;
     private String email;

@@ -40,7 +40,7 @@ public class JwtUtil {
 
         try{
             DecodedJWT decodedJWT = verifier.verify(token);
-            Long joinNo = Long.valueOf(decodedJWT.getSubject());
+            Long userNumber = Long.valueOf(decodedJWT.getSubject());
             String id = decodedJWT.getClaim("id").asString();
             String nickName = decodedJWT.getClaim("nickName").asString();
             LocalDate birthdate = LocalDate.parse(decodedJWT.getClaim("birthdate").asString());
@@ -48,7 +48,7 @@ public class JwtUtil {
             String image = decodedJWT.getClaim("image").asString();
 
             return AuthUser.builder()
-                    .joinNo(joinNo)
+                    .userNumber(userNumber)
                     .id(id)
                     .nickName(nickName)
                     .birthdate(birthdate)

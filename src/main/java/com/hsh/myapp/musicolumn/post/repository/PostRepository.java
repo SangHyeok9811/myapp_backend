@@ -18,10 +18,9 @@ public interface PostRepository extends JpaRepository<Post, Long> {
     @Query (value = "SELECT p FROM Post p WHERE p.songName LIKE %:keyword% OR p.singer LIKE %:keyword%" )
     Page<Post> findBySearch(String keyword, Pageable page);
 
-    @Query(value = "select * from post where post_no = :no", nativeQuery = true)
-    Optional<Post> findPostByPostNo(Long no);
+    @Query(value = "select * from post where post_no = :postNo", nativeQuery = true)
+    Optional<Post> findPostByPostNo(Long postNo);
 
-    Optional<Post> findPostByUserNo(Long no);
-
-
+    @Query(value = "select * from post where creator_no = :userNumber", nativeQuery = true)
+    Optional<Post> findPostByCreatorNo(Long userNumber);
 }
