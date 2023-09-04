@@ -23,9 +23,15 @@ public class User {
 
     @Column(nullable = false)
     private String nickName;
+
+    @Column(nullable = false)
+    private LocalDate birthdate;
+
     @Column(nullable = false)
     private String email;
-    private LocalDate birthdate;
+
+    @Column(columnDefinition = "LONGTEXT")
+    private String userImage;
 
     @OneToMany(mappedBy = "user") // User 엔티티와 연관된 게시물들을 조회하기 위한 One-to-Many 관계
     private List<Post> posts; // 유저가 작성한 게시물들

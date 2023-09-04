@@ -13,6 +13,9 @@ public class Post {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long postNo;
+
+    private long creatorNo;
+
     private String title;
 
     private String creatorName;
@@ -28,7 +31,6 @@ public class Post {
     @Column(columnDefinition = "LONGTEXT")
     private String video;
 
-//    private long joinNo
     @Column(name = "`like`")
     private long like;
 

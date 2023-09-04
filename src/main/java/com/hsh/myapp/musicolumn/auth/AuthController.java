@@ -80,8 +80,11 @@ public class AuthController {
         }
         String token = jwt.createToken(
                 l.getJoinNo(),l.getId(),
-                user.get().getNickName());
-        System.out.println(token);
+                user.get().getNickName(),
+                user.get().getBirthdate(),
+                user.get().getEmail(),
+                user.get().getUserImage());
+        System.out.println("토큰: " + token);
 
         Cookie cookie = new Cookie("token",token);
         cookie.setPath("/");

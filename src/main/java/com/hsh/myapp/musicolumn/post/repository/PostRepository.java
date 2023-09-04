@@ -9,6 +9,7 @@ import org.springframework.data.jpa.repository.Query;
 
 
 import java.util.List;
+import java.util.Optional;
 
 public interface PostRepository extends JpaRepository<Post, Long> {
     @Query(value = "select * from post order by post_no asc", nativeQuery = true)
@@ -16,4 +17,11 @@ public interface PostRepository extends JpaRepository<Post, Long> {
 
     @Query (value = "SELECT p FROM Post p WHERE p.songName LIKE %:keyword% OR p.singer LIKE %:keyword%" )
     Page<Post> findBySearch(String keyword, Pageable page);
+
+    @Query(value = "select * from post where post_no = :no", nativeQuery = true)
+    Optional<Post> findPostByPostNo(Long no);
+
+    Optional<Post> findPostByUserNo(Long no);
+
+
 }

@@ -36,8 +36,9 @@ public class AuthService {
         User toSaveUser =
                 User.builder()
                         .nickName(req.getNickName())
-                        .email(req.getEmail())
                         .birthdate(req.getBirthdate())
+                        .email(req.getEmail())
+                        .userImage("")
                         .login(savedLogin)
                         .build();
         long userNo = userRepo.save(toSaveUser).getUserNo();

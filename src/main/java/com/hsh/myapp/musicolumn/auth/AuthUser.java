@@ -5,6 +5,8 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDate;
+
 @Data
 @Builder
 @AllArgsConstructor
@@ -13,4 +15,7 @@ public class AuthUser {
     private long joinNo;
     private String id;
     private String nickName;
+    private String email;
+    private LocalDate birthdate;
+    private String image;
 }
