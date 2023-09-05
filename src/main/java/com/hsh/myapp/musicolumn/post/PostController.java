@@ -69,24 +69,26 @@ public class PostController {
     public ResponseEntity<Map<String, Object>> addPost
             (@RequestBody Post post, @RequestAttribute AuthUser authUser) {
 
-        System.out.println(authUser);
         System.out.println(post);
+        System.out.println(authUser);
+
+        Optional<User> user = userRepo.findById(authUser.getUserNumber());
 
         if (post.getTitle() == null || post.getContent() == null || post.getSinger() == null || post.getSongName() == null ||
                 post.getTitle().isEmpty() || post.getContent().isEmpty() || post.getSinger().isEmpty() || post.getSongName().isEmpty()) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
         }
 
-        post.setCreatorNo(authUser.getUserNumber());
+        post.setUser(user.get());
         post.setCreatorName(authUser.getNickName());
         post.setCreatedTime(new Date().getTime());
         post.setLike(0);
+        post.setCommentCnt(0);
 
         Post savedPost = postRepo.save(post);
 
         if (savedPost != null) {   // 값이 있을경우 true, 없으면 false
             Map<String, Object> res = new HashMap<>();
-            res.put("data", savedPost);
             res.put("message", "created");
 
             // HTTP Status Code: 201 Created
@@ -98,11 +100,11 @@ public class PostController {
     }
 
     @Auth
-    @DeleteMapping(value = "/{no}")
+    @DeleteMapping(value = "/{postNo}")
     public ResponseEntity removePost(@PathVariable long postNo, @RequestAttribute AuthUser authUser) {
         System.out.println(postNo);
 
-        Optional<Post> post = postRepo.findPostByPostNo(postNo);
+        Optional<Post> post = postRepo.findById(postNo);
 
 
         if (!post.isPresent()) {
@@ -124,7 +126,7 @@ public class PostController {
         System.out.println(post);
 
         // 1. 키값으로 조회해옴
-        Optional<Post> findedPost = postRepo.findPostByCreatorNo(authUser.getUserNumber());
+        Optional<Post> findedPost = postRepo.findById(postNo);
         // 2. 해당 레코드가 있는지 확인
         if (!findedPost.isPresent()) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
@@ -166,16 +168,14 @@ public class PostController {
             @RequestBody PostComment postComment,
             @RequestAttribute AuthUser authUser) {
 
-        Optional<Post> post = postRepo.findPostByPostNo(postNo);
-        Optional<User> user = userRepo.findUserByUserNumber(authUser.getUserNumber());
+        Optional<Post> post = postRepo.findById(postNo);
+        Optional<User> user = userRepo.findById(authUser.getUserNumber());
         if(!post.isPresent()) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
         }
 
         // 커멘트 추가
         postComment.setOwnerNickName(authUser.getNickName());
-        postComment.setOwnerNo(authUser.getUserNumber());
-        postComment.setPostNo(postNo);
         postComment.setPost(post.get());
         postComment.setUser(user.get());
 

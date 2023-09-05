@@ -17,9 +17,9 @@ public class PostComment {
 
     private String ownerNickName;
 
-    private long ownerNo;
+//    private long ownerNo;
 
-    private long postNo;
+//    private long postNo;
 
     @ManyToOne
 //    @JoinColumn(name = "postNo")

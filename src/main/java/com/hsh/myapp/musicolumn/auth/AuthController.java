@@ -94,7 +94,7 @@ public class AuthController {
         }
 
         String token = jwt.createToken(
-                user.get().getUserNumber(),l.getId(),
+                user.get().getUserNumber(), l.getId(),
                 user.get().getNickName(),
                 user.get().getBirthdate(),
                 user.get().getEmail(),
@@ -111,7 +111,7 @@ public class AuthController {
 
         return ResponseEntity.status(HttpStatus.FOUND)
                 .location(ServletUriComponentsBuilder
-                        .fromHttpUrl("http://localhost:5500")
+                        .fromHttpUrl("http://localhost:5500/login-user-page/main-page.html")
                         .build().toUri())
                 .build();
     }

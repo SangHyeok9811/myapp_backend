@@ -37,7 +37,6 @@ public class JwtUtil {
     public AuthUser validateToken(String token) {
         Algorithm algorithm = Algorithm.HMAC256(secret);
         JWTVerifier verifier = JWT.require(algorithm).build();
-
         try{
             DecodedJWT decodedJWT = verifier.verify(token);
             Long userNumber = Long.valueOf(decodedJWT.getSubject());
