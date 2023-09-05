@@ -6,8 +6,8 @@ import com.hsh.myapp.musicolumn.auth.entity.LoginRepository;
 import com.hsh.myapp.musicolumn.auth.entity.User;
 import com.hsh.myapp.musicolumn.auth.entity.UserRepository;
 import com.hsh.myapp.musicolumn.post.entity.Post;
-import com.hsh.myapp.musicolumn.post.entity.PostComment;
-import com.hsh.myapp.musicolumn.post.repository.PostCommentRepository;
+//import com.hsh.myapp.musicolumn.post.entity.PostComment;
+//import com.hsh.myapp.musicolumn.post.repository.PostCommentRepository;
 import com.hsh.myapp.musicolumn.post.repository.PostRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -32,8 +32,8 @@ public class PostController {
     @Autowired
     UserRepository userRepo;
 
-    @Autowired
-    PostCommentRepository commentRepo;
+//    @Autowired
+//    PostCommentRepository commentRepo;
 
     @Autowired
     PostService service;
@@ -69,8 +69,8 @@ public class PostController {
     public ResponseEntity<Map<String, Object>> addPost
             (@RequestBody Post post, @RequestAttribute AuthUser authUser) {
 
-        System.out.println(post);
         System.out.println(authUser);
+        System.out.println(post);
 
         Optional<User> user = userRepo.findById(authUser.getUserNumber());
 
@@ -83,12 +83,14 @@ public class PostController {
         post.setCreatorName(authUser.getNickName());
         post.setCreatedTime(new Date().getTime());
         post.setLike(0);
-        post.setCommentCnt(0);
+//        post.setCommentCnt(0);
 
         Post savedPost = postRepo.save(post);
+        System.out.println();
 
         if (savedPost != null) {   // 값이 있을경우 true, 없으면 false
             Map<String, Object> res = new HashMap<>();
+            res.put("data", savedPost);
             res.put("message", "created");
 
             // HTTP Status Code: 201 Created
@@ -161,34 +163,55 @@ public class PostController {
         //ok 처리
         return ResponseEntity.ok().build();
     }
-    @Auth
-    @PostMapping("/{postNo}/comments")
-    public ResponseEntity addComments(
-            @PathVariable long postNo,
-            @RequestBody PostComment postComment,
-            @RequestAttribute AuthUser authUser) {
 
-        Optional<Post> post = postRepo.findById(postNo);
-        Optional<User> user = userRepo.findById(authUser.getUserNumber());
-        if(!post.isPresent()) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+    @Auth
+    @PutMapping(value="/increaseLike")
+    public ResponseEntity increaseLike(@RequestBody PostIncreaseLike postIncreaseLike, @RequestAttribute AuthUser authUser){
+        System.out.println(postIncreaseLike);
+        System.out.println(authUser);
+
+        Optional<Post> findedPost = postRepo.findById(postIncreaseLike.getPostNo());
+
+        if (!findedPost.isPresent()) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
         }
 
-        // 커멘트 추가
-        postComment.setOwnerNickName(authUser.getNickName());
-        postComment.setPost(post.get());
-        postComment.setUser(user.get());
+        Post p = findedPost.get();
 
-        // 커멘트 건수 증가 및 최근 커멘트 표시
-        Post findedPost = post.get();
-        User findedUser = user.get();
-//        findedPost.setLatestComment(postComment.getCommentContent());
-        findedPost.setCommentCnt(post.get().getCommentCnt() + 1);
+        p.setLike(postIncreaseLike.getLike());
+        postRepo.save(p);
 
-        // 트랜잭션 처리
-        service.createComment(findedPost, findedUser, postComment);
-
-        return ResponseEntity.status(HttpStatus.CREATED).build();
+        return ResponseEntity.ok().build();
     }
+
+//    @Auth
+//    @PostMapping("/{postNo}/comments")
+//    public ResponseEntity addComments(
+//            @PathVariable long postNo,
+//            @RequestBody PostComment postComment,
+//            @RequestAttribute AuthUser authUser) {
+//
+//        Optional<Post> post = postRepo.findById(postNo);
+//        Optional<User> user = userRepo.findById(authUser.getUserNumber());
+//        if(!post.isPresent()) {
+//            return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+//        }
+//
+//        // 커멘트 추가
+//        postComment.setOwnerNickName(authUser.getNickName());
+//        postComment.setPost(post.get());
+//        postComment.setUser(user.get());
+//
+//        // 커멘트 건수 증가 및 최근 커멘트 표시
+//        Post findedPost = post.get();
+//        User findedUser = user.get();
+////        findedPost.setLatestComment(postComment.getCommentContent());
+//        findedPost.setCommentCnt(post.get().getCommentCnt() + 1);
+//
+//        // 트랜잭션 처리
+//        service.createComment(findedPost, findedUser, postComment);
+//
+//        return ResponseEntity.status(HttpStatus.CREATED).build();
+//    }
 
 }

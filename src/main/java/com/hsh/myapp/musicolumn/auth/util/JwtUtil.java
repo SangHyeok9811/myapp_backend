@@ -7,7 +7,7 @@ import com.auth0.jwt.exceptions.JWTVerificationException;
 import com.auth0.jwt.interfaces.DecodedJWT;
 import com.hsh.myapp.musicolumn.auth.AuthUser;
 import com.hsh.myapp.musicolumn.post.entity.Post;
-import com.hsh.myapp.musicolumn.post.entity.PostComment;
+//import com.hsh.myapp.musicolumn.post.entity.PostComment;
 
 import java.time.LocalDate;
 import java.util.Date;

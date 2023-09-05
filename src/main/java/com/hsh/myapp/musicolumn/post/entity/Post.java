@@ -38,14 +38,13 @@ public class Post {
 
     private long createdTime;
 
-    @OneToMany(mappedBy = "post")
-    private List<PostComment> postComments;
+//    @OneToMany(mappedBy = "post")
+//    private List<PostComment> postComments;
 
-    private long commentCnt;
+//    private long commentCnt;
 
 //    private String latestComment;
 
     @ManyToOne
-//    @JoinColumn(name = "userNumber")
     private User user;
 }
